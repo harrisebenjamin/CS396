@@ -1,0 +1,50 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+    <!-- <div class="d-flex justify-content-md-center align-items-center text-white" style="height: 100vh;">
+        <h1>Hello World!!</h1>
+    </div> -->
+
+    <div class="container m-3">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-white">Discussion Board</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <div class="card m-3">
+                    <div class="card-header bg-secondary text-white">
+                        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                    </div>
+                    <div class="card-body bg-dark text-white">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <input type="submit" value="Post" class="btn btn-primary">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-9">
+                {% for post in userPosts %}
+                <div class="card m-3">
+                    <div class="card-header bg-secondary text-white">
+                        <h2>{{ post.user.first_name }} {{ post.user.last_name }}</h2>
+                    </div>
+                    <div class="card-body bg-dark text-white">
+                        <h4>{{ post.title }}</h4>
+                        <p>{{ post.content }}</p>
+                    </div>
+                    <div class="card-footer bg-dark text-white">
+                        <h9>{{ post.createdOn }}</h9>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

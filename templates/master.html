@@ -1,0 +1,33 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+    <body class="bg-dark">
+        
+        <nav class="navbar sticky-top navbar-expand-lg bg-secondary">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="">App</a>
+                <ul class="navbar-nav justify-right">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white">Lessons</a> <!--TODO: Add href-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+
+    </body>
+</html>

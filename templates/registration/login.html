@@ -1,0 +1,26 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html>
+    <body class="bg-dark">
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+                <div class="card text-center">
+                    <div class="card-header bg-secondary text-white">
+                        <h2>Log In</h2>
+                    </div>
+                    <div class="card-body bg-dark text-white">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <input type="submit" value="Log In" class="btn btn-primary justify-content-left">
+                            <a class="btn btn-secondary justify-content-right" href="">Sign Up</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
