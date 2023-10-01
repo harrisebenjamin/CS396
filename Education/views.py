@@ -13,7 +13,9 @@ def index(request):
     if request.method == "POST":
         form  = PostForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
             return HttpResponseRedirect('/')
     else:
         form = PostForm()
