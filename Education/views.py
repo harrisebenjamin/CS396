@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+
+
 from userposts.forms import PostForm
 from userposts.models import UserPost
-from django.urls import reverse
 
 # Create your views here.
 
@@ -26,5 +28,6 @@ def index(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    userPosts = UserPost.objects.all().filter(user = request.user).order_by('-createdOn')
+    return render(request, 'profile.html', {"userPosts": userPosts})
         

@@ -1,0 +1,87 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <div class="card m-3">
+            <div class="card-header bg-secondary text-white">
+                <h3>{{ post.user.first_name }} {{ post.user.last_name }}</h3>
+            </div>
+            <div class="card-body bg-dark text-white">
+                <h4>{{ post.title }}</h4>
+                <p>{{ post.content }}</p>
+            </div>
+            <div class="card-footer bg-dark text-white">
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex justify-content-start">
+                            <h9>{{ post.createdOn }}</h9>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-end">
+                            {% if post.user == request.user or "Teachers" in request.user.groups.all %}
+                                <a class="btn btn-success me-3" href="{% url 'update' post.id %}">Update</a>
+                                <a class="btn btn-danger" href="{% url 'delete' post.id %}">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-9">
+        <h3 class="text-white m-3">Comments</h3>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-9">
+        <div class="card m-3">
+            <div class="card-header bg-secondary text-white">
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            </div>
+            <div class="card-body bg-dark text-white">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input class="btn btn-primary" type="submit" value="Comment">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-9">
+        {% for comment in comments %}
+            <div class="card m-3">
+                <div class="card-header bg-secondary text-white">
+                    <h3>{{ comment.user.first_name }} {{ comment.user.last_name }}</h3>
+                </div>
+                <div class="card-body bg-dark text-white">
+                    <p>{{ comment.content }}</p>
+                </div>
+                <div class="card-footer bg-dark text-white">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-start">
+                                <h9>{{ comment.createdOn }}</h9>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                {% if comment.user == request.user or "Teachers" in request.user.groups.all %}
+                                    <a class="btn btn-danger" href="{% url 'deleteComment' comment.id %}">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

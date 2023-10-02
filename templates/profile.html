@@ -2,8 +2,42 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-md-center align-items-center text-white" style="height: 100vh;">
-    <h1>{{ user.first_name }}</h1>
+<div class="row justify-content-center">
+    <div class="col-9">
+        <h1 class="text-white m-3">{{ user.first_name }} {{ user.last_name }}</h1>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        {% for post in userPosts %}
+            <div class="card m-3">
+                <div class="card-header bg-secondary text-white">
+                    <a class="h4 text-white" href="{% url 'view' post.id %}">{{ post.title }}</a>
+                </div>
+                <div class="card-body bg-dark text-white">
+                    <p>{{ post.content }}</p>
+                </div>
+                <div class="card-footer bg-dark text-white">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-start">
+                                <h9>{{ post.createdOn }}</h9>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                {% if post.user == request.user or "Teachers" in request.user.groups.all %}
+                                    <a class="btn btn-success me-3" href="{% url 'update' post.id %}">Update</a>
+                                    <a class="btn btn-danger" href="{% url 'delete' post.id %}">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}
