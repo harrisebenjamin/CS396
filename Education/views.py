@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from userposts.forms import PostForm
 from userposts.models import UserPost
+from django.urls import reverse
 
 # Create your views here.
 
@@ -16,7 +17,7 @@ def index(request):
             obj = form.save(commit=False)
             obj.user = request.user
             obj.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('home'))
     else:
         form = PostForm()
 

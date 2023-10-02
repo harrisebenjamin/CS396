@@ -41,7 +41,7 @@
                             </div>
                             <div class="d-flex justify-content-end">
                                 {% if post.user == request.user or "Teachers" in request.user.groups.all %}
-                                    <a class="btn btn-danger">Delete</a>
+                                    <a class="btn btn-danger" href="{% url 'delete' post.id %}">Delete</a>
                                 {% endif %}
                             </div>
                         </div>
