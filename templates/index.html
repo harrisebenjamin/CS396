@@ -43,8 +43,8 @@
                             </div>
                             <div class="col">
                                 <div class="d-flex justify-content-end">
-                                    {% if post.user == request.user or "Teachers" in request.user.groups.all %}
-                                        <a class="btn btn-success me-3" href="{% url 'update' post.id %}">Update</a>
+                                    {% if post.user == request.user or userGroup.isTeacher %}
+                                        <!-- <a class="btn btn-success me-3" href="{% url 'update' post.id %}">Update</a> -->
                                         <a class="btn btn-danger" href="{% url 'delete' post.id %}">Delete</a>
                                     {% endif %}
                                 </div>

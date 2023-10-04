@@ -16,7 +16,7 @@
                             {% csrf_token %}
                             {{form.as_p}}
                             <input type="submit" value="Log In" class="btn btn-primary justify-content-left">
-                            <a class="btn btn-secondary justify-content-right" href="">Sign Up</a>
+                            <a class="btn btn-secondary justify-content-right" href="{% url 'signup' %}">Sign Up</a>
                         </form>
                     </div>
                 </div>

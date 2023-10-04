@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 
 from .models import UserPost, Comment
 from .forms import CommentForm
+from Education.models import Group
 
 # Create your views here.
 @login_required
@@ -19,6 +20,7 @@ def deletePost(request, postID=None):
 def viewPost(request, postID=None):
     post = UserPost.objects.get(id = postID)
     comments = Comment.objects.all().filter(post = postID).order_by("-createdOn")
+    userGroup = Group.objects.get(user = request.user)
 
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -32,7 +34,7 @@ def viewPost(request, postID=None):
     else:
         form = CommentForm()
 
-    return render(request, 'viewPost.html', {"form": form, "post": post, "comments": comments})
+    return render(request, 'viewPost.html', {"form": form, "post": post, "comments": comments, "userGroup": userGroup})
 
 
 @login_required
