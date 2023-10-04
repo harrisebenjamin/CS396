@@ -1,0 +1,38 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+<div class="row mt-5">
+    <div class="col m-3">
+        {% if userGroup.isTeacher %}
+            <div class="row">
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-success" href="{% url 'createLesson' %}">Create a lesson</a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row justify-content-center">
+            {% for lesson in lessons %}
+                <div class="card m-3">
+                    <div class="card-header bg-secondary text-white">
+                        <a class="h4 text-white" href="{% url 'viewLesson' lesson.id %}">{{ lesson.title }}</a>
+                    </div>
+                    <div class="card-footer bg-dark text-white">
+                        <h9>{{ lesson.createdOn }}</h9>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col m-3">
+        {% if userGroup.isTeacher %}
+            <div class="row">
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-success" href="">Create a Quiz</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

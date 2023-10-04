@@ -33,6 +33,23 @@
                     <div class="card-body bg-dark text-white">
                         <a class="h4 text-white" href="{% url 'view' post.id %}">{{ post.title }}</a>
                         <p>{{ post.content }}</p>
+                        <div class="row">
+                            <div class="col">
+                                {% if post.file1 %}
+                                <a href="{{ post.file1.url }}" download>{{ post.file1 }}</a>
+                                {% endif %}
+                            </div>
+                            <div class="col">
+                                {% if post.file2 %}
+                                <a href="{{ post.file2.url }}" download>{{ post.file2 }}</a>
+                                {% endif %}
+                            </div>
+                            <div class="col">
+                                {% if post.file3 %}
+                                <a href="{{ post.file3.url }}" download>{{ post.file3 }}</a>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer bg-dark text-white">
                         <div class="row">

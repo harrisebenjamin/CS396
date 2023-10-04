@@ -1,0 +1,26 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <div class="card m-3">
+                <div class="card-header bg-secondary text-white">
+                    <h3>{{lesson.title}}</lesson></h3>
+                </div>
+                <div class="card-body bg-dark text-white">
+                    <p>{{lesson.content}}</p>
+                    {% if lesson.link %}
+                        <h5>Links:</h5>
+                        <a class="text-white" href="{{ lesson.link }}">{{ lesson.link }}</a>
+                    {% endif %}
+                    {% if lesson.file %}
+                        <h5>Files:</h5>
+                        <a class="text-white" href="{{ lesson.file.url }}" download>{{ lesson.file }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

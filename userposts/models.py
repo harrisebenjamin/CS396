@@ -10,6 +10,9 @@ class UserPost(models.Model):
     title = models.CharField(max_length=150)
     content = models.TextField()
     createdOn = models.DateTimeField(auto_now_add=True)
+    file1 = models.FileField(null=True, blank=True, upload_to="documents/")
+    file2 = models.FileField(null=True, blank=True, upload_to="documents/")
+    file3 = models.FileField(null=True, blank=True, upload_to="documents/")
 
     def __str__(self):
         return self.title

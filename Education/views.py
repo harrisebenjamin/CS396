@@ -17,7 +17,7 @@ def index(request):
     userPosts = UserPost.objects.all().order_by('-createdOn')
     userGroup = Group.objects.get(user = request.user)
     if request.method == "POST":
-        form  = PostForm(request.POST)
+        form  = PostForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.user = request.user

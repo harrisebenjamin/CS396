@@ -1,0 +1,22 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+            <div class="card text-center">
+                <div class="card-header bg-secondary text-white">
+                    <h2>Create a Lesson</h2>
+                </div>
+                <div class="card-body bg bg-dark text-white">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>"
+        </div>
+    </div>
+
+{% endblock %}
