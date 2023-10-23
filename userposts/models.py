@@ -15,7 +15,8 @@ class UserPost(models.Model):
     file3 = models.FileField(null=True, blank=True, upload_to="documents/")
 
     def __str__(self):
-        return self.title
+        return f'{self.title} ({self.user})'
+    
     
 
 

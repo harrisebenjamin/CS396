@@ -7,16 +7,17 @@
     <body class="bg-dark">
       <div class="container">
         <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-            <div class="card text-center">
-                <div class="card-header bg-secondary text-white">
+            <div class="card">
+                <div class="card-header bg-secondary text-white text-center">
                     <h2>Register</h2>
                 </div>
                 <div class="card-body bg-dark text-white">
                     <form method="post">
                         {% csrf_token %}
-                        {{form.as_p}}
+                        {{form.as_p }}
                         {{form2.as_p}}
                         <input type="submit" value="Register" class="btn btn-primary">
+                        <a class="btn btn-secondry" href="{% url 'login' %}">Log In</a>
                     </form>
                 </div>
             </div>
