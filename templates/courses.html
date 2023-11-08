@@ -1,0 +1,11 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+{% for course in courseList %}
+
+    <h1 class="text-white">{{ course }}</h1>
+
+{% endfor %}
+
+{% endblock %}

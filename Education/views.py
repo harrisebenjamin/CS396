@@ -7,20 +7,22 @@ from django.urls import reverse
 
 from userposts.forms import PostForm
 from userposts.models import UserPost
-from .models import Group
+from .models import Group, Course
 from .forms import SignupForm, teacherForm
 
 # Create your views here.
 
 @login_required
 def index(request):
-    userPosts = UserPost.objects.all().order_by('-createdOn')
+    currentCourse = Course.objects.get(name = 'General')
+    userPosts = UserPost.objects.all().filter(course = currentCourse).order_by('-createdOn')
     userGroup = Group.objects.get(user = request.user)
     if request.method == "POST":
         form  = PostForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.user = request.user
+            obj.course = currentCourse
             obj.save()
             return HttpResponseRedirect(reverse('home'))
     else:
@@ -51,4 +53,10 @@ def signup(request):
         form2 = teacherForm()
 
     return render(request, 'registration/signup.html', {"form": form, "form2": form2})
+
+
+@login_required
+def courses(request):
+    courseList = Course.objects.all().exclude(name = 'General').order_by('name')
+    return render(request, 'courses.html', {"courseList": courseList})
         

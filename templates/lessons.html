@@ -28,10 +28,19 @@
         {% if userGroup.isTeacher %}
             <div class="row">
                 <div class="d-flex justify-content-center">
-                    <a class="btn btn-success" href="">Create a Quiz</a>
+                    <a class="btn btn-success" href="{% url 'createQuiz' %}">Create a Quiz</a>
                 </div>
             </div>
         {% endif %}
+        <div class="row justify-content-center">
+            {% for quiz in quizzes %}
+                <div class="card m-3">
+                    <div class="card-header bg-secondary text-white">
+                        <a class="h4 text-white" href="{% url 'takeQuiz' quiz.id %}">{{ quiz.title }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
