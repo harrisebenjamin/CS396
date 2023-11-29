@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Form, ChoiceField, RadioSelect
+from django.forms import ModelForm, Form, ChoiceField, RadioSelect, Select
 from django.forms.widgets import TextInput, Textarea, FileInput, URLInput, NumberInput
 
 from .models import Lesson, Quiz, Question

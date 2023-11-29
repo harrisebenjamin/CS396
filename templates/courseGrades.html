@@ -1,0 +1,116 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+<nav class="navbar sticky-top navbar-expand-lg bg-secondary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="{% url 'courseDiscussionBoard' course.id %}">{{ course.name }}</a>             
+        <ul class="navbar-nav justify-right">
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseDiscussionBoard' course.id  %}">Discussion Board</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseLessons' course.id %}">Lessons</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseQuizzes' course.id %}">Quizzes</a> 
+            </li>
+            {% if userGroup.isTeacher %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'courseGrades' course.id %}">Grades</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'studentCourseGrades' course.id %}">Grades</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <div class="col justify-content-start">
+            <h1 class="text-white m-3">{{ course.name }} Grades</h1>
+        </div>
+        <div class="col justify-content-end">
+            <a class="btn btn-success" href="{% url 'courseGrades' course.id %}">Ascending</a>
+            <a class="btn btn-success" href="{% url 'courseGradesDesc' course.id %}">Descending</a>
+        </div>
+    </div>
+</div>
+
+{% for quiz in quizzes %}
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <h4 class="text-white m-3">{{ quiz.title }}</h4>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Grade</th>
+                    <th scope="col">Attempts Remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for score in scores %}
+                {% if score.quiz == quiz %}
+                    <tr>
+                        <td>{{score.student.first_name}} {{score.student.last_name}}</td>
+                        <td>{{score.score}}%</td>
+                        <td>{{score.attemptNumber}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endfor %}
+
+<hr class="text-white">
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <h2 class="text-white m-3">Course Grades</h2>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for grade in grades %}
+                <tr>
+                    <td>{{grade.student.first_name}} {{grade.student.last_name}}</td>
+                    <td>{{grade.grade}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        {% autoescape off %}
+            {{ graph }}
+        {% endautoescape %}
+    </div>
+</div>
+
+{% endblock %}

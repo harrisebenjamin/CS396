@@ -30,6 +30,14 @@ class Quiz(models.Model):
     
 
 class Question(models.Model):
+
+    CHOICES = [
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+    ]
+
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     questionNumber = models.IntegerField(default=1)
     question = models.TextField()
@@ -37,7 +45,7 @@ class Question(models.Model):
     option2 = models.CharField(max_length=250, default='')
     option3 = models.CharField(max_length=250, default='')
     option4 = models.CharField(max_length=250, default='')
-    answer = models.IntegerField(default=1, validators=[MaxValueValidator(4), MinValueValidator(1)])
+    answer = models.CharField(max_length=1, choices=CHOICES, default='1')
 
     def __str__(self):
         return f'{self.quiz} {self.question}'
@@ -47,6 +55,8 @@ class StudentScore(models.Model):
     student = models.ForeignKey(user, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     score = models.FloatField()
+    attemptNumber = models.IntegerField(default=2)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=Course.objects.get(name = 'General').id)
 
     def __str__(self):
-        return f'{self.student} {self.quiz}'
+        return f'{self.student} {self.quiz} {self.score}'

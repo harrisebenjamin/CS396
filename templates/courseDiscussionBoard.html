@@ -1,0 +1,103 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+<nav class="navbar sticky-top navbar-expand-lg bg-secondary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="{% url 'courseDiscussionBoard' course.id %}">{{ course.name }}</a>             
+        <ul class="navbar-nav justify-right">
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseDiscussionBoard' course.id  %}">Discussion Board</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseLessons' course.id %}">Lessons</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseQuizzes' course.id %}">Quizzes</a> 
+            </li>
+            {% if userGroup.isTeacher %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'courseGrades' course.id %}">Grades</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'studentCourseGrades' course.id %}">Grades</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+
+<div class="row justify-content-center m-3">
+    <div class="col-9">
+        <h1 class="text-white">{{ course.name }} Discussion Board</h1>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-9">
+        <div class="card m-3">
+            <div class="card-header bg-secondary text-white">
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            </div>
+            <div class="card-body bg-dark text-white">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type="submit" value="Post" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-9">
+        {% for post in userPosts %}
+            <div class="card m-3">
+                <div class="card-header bg-secondary text-white">
+                    <h3>{{ post.user.first_name }} {{ post.user.last_name }}</h3>
+                </div>
+                <div class="card-body bg-dark text-white">
+                    <a class="h4 text-white" href="{% url 'view' post.id %}">{{ post.title }}</a>
+                    <p>{{ post.content }}</p>
+                    <div class="row">
+                        <div class="col">
+                            {% if post.file1 %}
+                            <a href="{{ post.file1.url }}" download>{{ post.file1 }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if post.file2 %}
+                            <a href="{{ post.file2.url }}" download>{{ post.file2 }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if post.file3 %}
+                            <a href="{{ post.file3.url }}" download>{{ post.file3 }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-dark text-white">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-start">
+                                <h9>{{ post.createdOn }}</h9>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex justify-content-end">
+                                {% if post.user == request.user or userGroup.isTeacher %}
+                                    <!-- <a class="btn btn-success me-3" href="{% url 'update' post.id %}">Update</a> -->
+                                    <a class="btn btn-outline-danger" href="{% url 'delete' post.id %}">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+<nav class="navbar sticky-top navbar-expand-lg bg-secondary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="{% url 'courseDiscussionBoard' course.id %}">{{ course.name }}</a>             
+        <ul class="navbar-nav justify-right">
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseDiscussionBoard' course.id  %}">Discussion Board</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseLessons' course.id %}">Lessons</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseQuizzes' course.id %}">Quizzes</a> 
+            </li>
+            {% if userGroup.isTeacher %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'courseGrades' course.id %}">Grades</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'studentCourseGrades' course.id %}">Grades</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <div class="col justify-content-start">
+            <h1 class="text-white m-3">{{ course.name }} Grades</h1>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-9">
+        <h2 class="text-white m-3">Course Grade: {{ grade.0.grade }}</h2>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <h4 class="text-white m-3">Quiz Scores:</h4>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Quiz Title</th>
+                    <th scope="col">Grade</th>
+                    <th scope="col">Attempts Remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for score in scores %}
+                <tr>
+                    <td>{{score.quiz.title}}</td>
+                    <td>{{score.score}}%</td>
+                    <td>{{score.attemptNumber}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

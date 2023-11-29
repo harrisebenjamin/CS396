@@ -2,42 +2,54 @@
 
 {% block content %}
 
-<div class="row mt-5">
-    <div class="col m-3">
-        {% if userGroup.isTeacher %}
-            <div class="row">
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-success" href="{% url 'createLesson' %}">Create a lesson</a>
-                </div>
-            </div>
-        {% endif %}
-        <div class="row justify-content-center">
-            {% for lesson in lessons %}
-                <div class="card m-3">
-                    <div class="card-header bg-secondary text-white">
-                        <a class="h4 text-white" href="{% url 'viewLesson' lesson.id %}">{{ lesson.title }}</a>
-                    </div>
-                    <div class="card-body bg-dark text-white">
-                        <h9>{{ lesson.createdOn }}</h9>
-                    </div>
-                </div>
-            {% endfor %}
+<nav class="navbar sticky-top navbar-expand-lg bg-secondary">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="{% url 'courseDiscussionBoard' course.id %}">{{ course.name }}</a>             
+        <ul class="navbar-nav justify-right">
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseDiscussionBoard' course.id  %}">Discussion Board</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseLessons' course.id %}">Lessons</a> 
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'courseQuizzes' course.id %}">Quizzes</a> 
+            </li>
+            {% if userGroup.isTeacher %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'courseGrades' course.id %}">Grades</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="{% url 'studentCourseGrades' course.id %}">Grades</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-9">
+        <h1 class="text-white m-3">{{ course.name }} Quizzes</h1>
+    </div>
+</div>
+
+{% if userGroup.isTeacher %}
+    <div class="row">
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-success" href="{% url 'courseCreateQuiz' course.id %}">Create a Quiz</a>
         </div>
     </div>
-    <div class="col m-3">
-        {% if userGroup.isTeacher %}
-            <div class="row">
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-success" href="{% url 'createQuiz' %}">Create a Quiz</a>
+{% endif %}
+
+{% for quiz in quizzes %}
+
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <div class="card m-3">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="h4 text-white">{{ quiz.title }}</h4>
                 </div>
-            </div>
-        {% endif %}
-        <div class="row justify-content-center">
-            {% for quiz in quizzes %}
-                <div class="card m-3">
-                    <div class="card-header bg-secondary text-white">
-                        <a class="h4 text-white" href="">{{ quiz.title }}</a>
-                    </div>
                     {% if quiz.id in scoreQuizzes %}
                         {% for score in studentScores %}
                             {% if score.quiz == quiz %}
@@ -106,10 +118,10 @@
                             </div>
                         </div>
                     {% endif %}
-                </div>
-            {% endfor %}
+            </div>
         </div>
     </div>
-</div>
+
+{% endfor %}
 
 {% endblock %}

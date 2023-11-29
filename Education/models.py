@@ -16,3 +16,21 @@ class Course(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+
+class CourseGrade(models.Model):
+    CHOICES = [
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D'),
+        ('F', 'F'),
+    ]
+
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    grade = models.CharField(max_length=1, choices=CHOICES, default='A')
+
+    def __str__(self):
+        return f'{self.student} {self.course} {self.grade}'
+    

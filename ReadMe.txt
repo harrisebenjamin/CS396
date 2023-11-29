@@ -14,6 +14,14 @@ or if you are using an anaconda enviroment use the command
 
     conda install -c conda-forge bootstrap
 
+To install plotly use the command 
+
+    pip install plotly==5.18.0
+
+or if you are using an anaconda environment use the command
+
+    conda install -c plotly plotly=5.18.0
+
 Next use the terminal to navigate to the root directory of the project (CS396) and use the command
 
     python manage.py runserver
