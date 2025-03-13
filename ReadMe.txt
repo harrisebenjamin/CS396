@@ -1,3 +1,6 @@
+A school project to create an education website using Python and Django.
+
+
 To run the program first install django using 
 
     pip install django
